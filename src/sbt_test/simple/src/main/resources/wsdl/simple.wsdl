@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:tns="https://www.acme.com/soap/simple" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="https://www.acme.com/soap/simple">
+    <wsdl:types>
+        <xsd:schema targetNamespace="https://www.acme.com/soap/simple">
+            <xsd:complexType name="foo">
+                <xsd:attribute name="value" type="xsd:string"/>
+            </xsd:complexType>
+            <xsd:simpleType name="bar">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="some"/>
+                    <xsd:enumeration value="other"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="foobar">
+                <xsd:sequence>
+                    <xsd:element name="foo" type="tns:foo"/>
+                    <xsd:element name="bar" type="tns:bar"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="test_request">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="withFoo" type="xsd:boolean"/>
+                        <xsd:element name="withBar" type="xsd:boolean"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="test_response" type="tns:foobar"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="testRequest">
+        <wsdl:part name="test_request" element="tns:test_request"/>
+    </wsdl:message>
+    <wsdl:message name="testResponse">
+        <wsdl:part name="test_response" element="tns:test_request"/>
+    </wsdl:message>
+    <wsdl:portType name="TestPortType">
+        <wsdl:operation name="test">
+            <wsdl:input message="tns:testRequest"/>
+            <wsdl:output message="tns:testResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TestBinding" type="tns:TestPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="test">
+            <soap:operation soapAction="https://api.acme.com/soap/test" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Test">
+        <wsdl:port name="TestPort" binding="tns:TestBinding">
+            <soap:address location="https://api.acme.com/soap/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
