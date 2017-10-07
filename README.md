@@ -1,4 +1,6 @@
 # sbt-cxf
+[![Build Status](https://api.travis-ci.org/dapassoftware/sbt-cxf.png?branch=master)](https://travis-ci.org/dapassoftware/sbt-cxf)
+[ ![Download](https://api.bintray.com/packages/dapassoftware/sbt-plugins/sbt-cxf/images/download.svg) ](https://bintray.com/dapassoftware/sbt-plugins/sbt-cxf/_latestVersion)
 
 SBT plugin for generating [CXF](http://cxf.apache.org/) Java classes from WSDLs using [wsdl2java](http://cxf.apache.org/docs/wsdl-to-java.html).
 
