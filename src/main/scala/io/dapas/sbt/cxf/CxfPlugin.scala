@@ -3,6 +3,8 @@ package io.dapas.sbt.cxf
 import sbt.Keys.{ivyConfigurations, _}
 import sbt.{Def, _}
 
+import scala.sys.process.ProcessLogger
+
 object CxfPlugin extends sbt.AutoPlugin {
 
   override def requires = sbt.plugins.JvmPlugin
@@ -111,7 +113,7 @@ object CxfPlugin extends sbt.AutoPlugin {
           "org.apache.cxf.tools.wsdlto.WSDLToJava"
         ) ++ args :+ wsdl.wsdlFile.getAbsolutePath
         s.log.debug(cmd.toString())
-        cmd ! s.log
+        scala.sys.process.Process(cmd).!
         s.log.info(s"Finished generation for ${wsdl.id}")
         IO.copyDirectory(output, (sourceManaged in CxfConfig).value, overwrite = true)
       }

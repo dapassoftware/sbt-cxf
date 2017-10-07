@@ -27,7 +27,7 @@ developers := List(
   )
 )
 
-crossSbtVersions := Vector("0.13.16")
+crossSbtVersions := Vector("0.13.16", "1.0.2")
 sbtPlugin := true
 publishMavenStyle := false
 scalacOptions += "-deprecation"
