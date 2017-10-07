@@ -6,7 +6,7 @@ SBT plugin for generating [CXF](http://cxf.apache.org/) Java classes from WSDLs 
 Add the plugin to your `project/plugins.sbt`
 
 ```scala
-addSbtPlugin("io.dapas.sbt" % "sbt-cxf" % "x.y.z")
+addSbtPlugin("io.dapas" % "sbt-cxf" % "x.y.z")
 ```
 
 The plugin is an auto-plugin and is automatically added to all projects and registers itself as a source generator in the `Compile` stage.
