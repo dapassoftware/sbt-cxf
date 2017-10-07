@@ -33,6 +33,12 @@ object CxfPlugin extends sbt.AutoPlugin {
       "The directory to generate the Java classes in"
     )
 
+    object CxfImplementationType extends Enumeration {
+      val Client, Impl, Server = Value
+    }
+
+    case class Wsdl(id: String, wsdlFile: File, pkg: String, implementations: Seq[CxfImplementationType.Value] = Seq(CxfImplementationType.Client, CxfImplementationType.Impl), extraFlags: Seq[String] = Nil, bindFile: Option[File] = None)
+
   }
 
   import autoImport._
