@@ -3,8 +3,6 @@ package io.dapas.sbt.cxf
 import sbt.Keys.{ivyConfigurations, _}
 import sbt.{Def, _}
 
-import scala.sys.process.ProcessLogger
-
 object CxfPlugin extends sbt.AutoPlugin {
 
   override def requires = sbt.plugins.JvmPlugin

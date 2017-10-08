@@ -6,12 +6,11 @@ $ exists target/scala-2.11/src_managed/cxf/simple/acme/simple/Bar.java
 $ exists target/scala-2.11/src_managed/cxf/simple/acme/simple/Foo.java
 $ exists target/scala-2.11/src_managed/cxf/simple/acme/simple/Foobar.java
 
-# Check if the client is generated
-$ exists target/scala-2.11/src_managed/cxf/simple/acme/simple/Test.java
-
 # Check if the implementation is generated
+$ exists target/scala-2.11/src_managed/cxf/simple/acme/simple/Test.java
 $ exists target/scala-2.11/src_managed/cxf/simple/acme/simple/TestPortTypeImpl.java
 
 # Check if the sources are copied to the managed source directory
 $ exists target/scala-2.11/src_managed/main/acme/simple/Test.java
+$ exists target/scala-2.11/src_managed/main/acme/simple/TestPortTypeImpl.java
 $ exists target/scala-2.11/src_managed/main/acme/simple/Foobar.java

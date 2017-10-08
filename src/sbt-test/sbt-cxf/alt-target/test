@@ -1,0 +1,10 @@
+# Generate the CXF Java classes during the compile task
+> compile
+
+# Check if the Java classes are generated to the alternate target directory
+$ exists target/scala-2.11/cxf/simple/acme/simple/Test.java
+$ exists target/scala-2.11/cxf/simple/acme/simple/Foobar.java
+
+# Check if the sources are copied to the managed source directory
+$ exists target/scala-2.11/src_managed/main/acme/simple/Test.java
+$ exists target/scala-2.11/src_managed/main/acme/simple/Foobar.java
