@@ -37,7 +37,14 @@ object CxfPlugin extends sbt.AutoPlugin {
       val Client, Impl, Server = Value
     }
 
-    case class Wsdl(id: String, wsdlFile: File, pkg: String, implementations: Seq[CxfImplementationType.Value] = Seq(CxfImplementationType.Client, CxfImplementationType.Impl), extraFlags: Seq[String] = Nil, bindFile: Option[File] = None)
+    case class Wsdl(
+      id: String, 
+      wsdlFile: File, 
+      pkg: Option[String] = None, 
+      implementations: Seq[CxfImplementationType.Value] = Seq(CxfImplementationType.Client, CxfImplementationType.Impl), 
+      extraFlags: Seq[String] = Nil, 
+      bindFile: Option[File] = None
+    )
 
   }
 
@@ -82,7 +89,7 @@ object CxfPlugin extends sbt.AutoPlugin {
 
       def params(wsdl: Wsdl): Seq[String] =
         cxfFlags.value ++
-          Seq("-p", wsdl.pkg) ++
+          wsdl.pkg.fold[Seq[String]](Seq.empty)(pkg => Seq("-p", pkg)) ++
           wsdl.implementations.map {
             case CxfImplementationType.Client => "-client"
             case CxfImplementationType.Impl => "-impl"
