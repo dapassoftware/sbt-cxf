@@ -23,14 +23,14 @@ Any WSDLs added to the `cxfWsdls` setting are automatically picked up. For examp
         id = "mywsdl",
         wsdlFile = (resourceDirectory in Compile).value / "wsdl" / "my-wsdl.wsdl",
         implementations = Seq(CxfImplementationType.Impl, CxfImplementationType.Client),
-        pkg = "com.acme.generated.jaxws.my",
+        pkg = Some("com.acme.generated.jaxws.my"),
         bindFile = Some((resourceDirectory in Compile).value / "wsdl" / "my-wsdl-bindings.xjb")
       ),
       Wsdl(
         id = "otherwsdl",
         wsdlFile = (resourceDirectory in Compile).value / "wsdl" / "other.wsdl",
         implementations = Seq(CxfImplementationType.Impl, CxfImplementationType.Client),
-        pkg = "com.acme.generated.jaxws.other"
+        pkg = Some("com.acme.generated.jaxws.other")
       )
     )
   )
