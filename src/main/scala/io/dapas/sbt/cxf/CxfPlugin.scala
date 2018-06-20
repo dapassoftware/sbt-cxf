@@ -32,17 +32,21 @@ object CxfPlugin extends sbt.AutoPlugin {
       "cxfTarget",
       "The directory to generate the Java classes in"
     )
+    lazy val cxfLogLevel = SettingKey[String](
+      "cxfLogLevel",
+      "Log level of the wsdl2java binary, one of: ('trace', 'debug', 'info', 'warn', 'error' or 'off'). If not specified, defaults to 'info'"
+    )
 
     object CxfImplementationType extends Enumeration {
       val Client, Impl, Server = Value
     }
 
     case class Wsdl(
-      id: String, 
-      wsdlFile: File, 
-      pkg: Option[String] = None, 
-      implementations: Seq[CxfImplementationType.Value] = Seq(CxfImplementationType.Client, CxfImplementationType.Impl), 
-      extraFlags: Seq[String] = Nil, 
+      id: String,
+      wsdlFile: File,
+      pkg: Option[String] = None,
+      implementations: Seq[CxfImplementationType.Value] = Seq(CxfImplementationType.Client, CxfImplementationType.Impl),
+      extraFlags: Seq[String] = Nil,
       bindFile: Option[File] = None
     )
 
@@ -56,6 +60,7 @@ object CxfPlugin extends sbt.AutoPlugin {
   val cxfDefaults: Seq[Def.Setting[_]] = Seq(
     cxfVersion := "2.1.2",
     libraryDependencies ++= Seq(
+      "org.slf4j"      % "slf4j-simple" % "1.7.25" % CxfConfig.name,
       "org.apache.cxf" % "cxf-tools-wsdlto-core" % cxfVersion.value % CxfConfig.name,
       "org.apache.cxf" % "cxf-tools-common" % cxfVersion.value % CxfConfig.name,
       "org.apache.cxf" % "cxf-tools-wsdlto-databinding-jaxb" % cxfVersion.value % CxfConfig.name,
@@ -67,7 +72,8 @@ object CxfPlugin extends sbt.AutoPlugin {
       "-xjc -Xequals -XhashCode -XtoString"
     ),
     cxfWsdls := Nil,
-    cxfTarget := sourceManaged.value / "cxf"
+    cxfTarget := sourceManaged.value / "cxf",
+    cxfLogLevel := "info"
   )
 
   lazy val cxfConfig: Seq[Def.Setting[_]] = Seq(
@@ -114,7 +120,9 @@ object CxfPlugin extends sbt.AutoPlugin {
         IO.createDirectory(output)
         s.log.info(s"Generating class for ${wsdl.id} from ${wsdl.wsdlFile.getAbsolutePath} to ${output.getAbsolutePath}")
         val cmd: Seq[String] = Seq(
-          "java", "-cp", classpath, "-Dfile.encoding=UTF-8",
+          "java", "-cp", classpath,
+          "-Dfile.encoding=UTF-8",
+          "-Dorg.slf4j.simpleLogger.defaultLogLevel=" + cxfLogLevel.value,
           "org.apache.cxf.tools.wsdlto.WSDLToJava"
         ) ++ args :+ wsdl.wsdlFile.getAbsolutePath
         s.log.debug(cmd.toString())
