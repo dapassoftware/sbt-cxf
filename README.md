@@ -8,7 +8,7 @@ SBT plugin for generating [CXF](http://cxf.apache.org/) Java classes from WSDLs 
 Add the plugin to your `project/plugins.sbt`
 
 ```scala
-addSbtPlugin("io.dapas" % "sbt-cxf" % "x.y.z")
+addSbtPlugin("io.dapas" % "sbt-cxf" % "0.2.0")
 ```
 
 The plugin is an auto-plugin and is automatically added to all projects and registers itself as a source generator in the `Compile` stage.
@@ -47,6 +47,8 @@ The plugin auto loads and when any WSDLs are defined under `cxfWsdls` the Java c
 - `cxfFlags := Seq("-validate", "-verbose", "-xjc -Xequals -XhashCode -XtoString")` - The CXF flags that are applied for all WSDLs in the project
 - `cxfTarget := sourceManaged / "cxf"` - The directories to place the generated sources; using SBT defaults this would be `target/scala-2.xx/src_managed/cxf/<id>/`
 - `cxfWsdls := Seq.empty[Wsdl]` - The WSDLs to generate the classes for, defaults to empty which skips generation
+- `cxfLogLevel := "info"` - Log level of the wsdl2java binary, one of: ('trace', 'debug', 'info', 'warn', 'error' or 'off'). If not specified, defaults to 'info'
+
 ### WSDL settings
 
 ## History
